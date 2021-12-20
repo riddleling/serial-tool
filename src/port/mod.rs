@@ -6,7 +6,10 @@ use bytes::{BufMut, BytesMut};
 
 use futures::channel::mpsc::UnboundedReceiver;
 use futures_util::{future, pin_mut, StreamExt, SinkExt};
-use tokio_serial::{SerialPort, SerialPortBuilderExt};
+use tokio_serial::SerialPortBuilderExt;
+
+#[cfg(windows)]
+use tokio_serial::SerialPort;
 
 struct LineCodec;
 
