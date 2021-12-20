@@ -55,6 +55,11 @@
 
 <br>
 
+## Screenshot
+
+![Screenshot](imgs/screenshot.png)
+
+
 ## License
 
 MIT License
