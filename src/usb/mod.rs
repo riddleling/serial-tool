@@ -4,19 +4,15 @@ use std::sync::{Arc, Mutex};
 
 use crate::my_tools::*;
 
-struct HotPlugHandler {
-    tx: glib::Sender<String>,
-}
+struct HotPlugHandler;
 
 impl<T: UsbContext> rusb::Hotplug<T> for HotPlugHandler {
     fn device_arrived(&mut self, device: Device<T>) {
         eprintln!("usb device arrived {:?}", device);
-        self.tx.send(String::from("[usb_hotplug](changed)")).expect("Could not send through channel");
     }
 
     fn device_left(&mut self, device: Device<T>) {
         eprintln!("usb device left {:?}", device);
-        self.tx.send(String::from("[usb_hotplug](changed)")).expect("Could not send through channel");
     }
 }
 
@@ -39,7 +35,7 @@ pub fn hotplug_runloop_startup(event_tx: glib::Sender<String>, detect_pause_flag
         let _reg: Option<Registration<Context>> = Some(
             match HotplugBuilder::new()
                     .enumerate(true)
-                    .register(&context, Box::new(HotPlugHandler {tx: event_tx}))
+                    .register(&context, Box::new(HotPlugHandler {}))
             {
                 Ok(r) => r,
                 Err(e) => {
@@ -51,6 +47,9 @@ pub fn hotplug_runloop_startup(event_tx: glib::Sender<String>, detect_pause_flag
 
         loop {
             context.handle_events(None).unwrap();
+            let sec = Duration::from_secs_f32(0.5);
+            thread::sleep(sec);
+            event_tx.send(String::from("[usb_hotplug](changed)")).expect("Could not send through channel");
         }
     } else {
         eprintln!("libusb hotplug api unsupported");
