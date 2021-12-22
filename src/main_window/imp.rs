@@ -169,7 +169,7 @@ impl ObjectImpl for MainWindow {
             .build();
 
         let clear_output_button = gtk::Button::builder()
-            .label("Clear output")
+            .label("Clear Output")
             .margin_start(5)
             .build();
 
