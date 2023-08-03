@@ -1,9 +1,6 @@
 # A simple GUI serial port tool.
 
-## Screenshot
-
 ![Screenshot](imgs/screenshot.png)
-
 
 ## Compile & Run
 
