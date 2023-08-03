@@ -55,6 +55,7 @@
     - On **Windows**, open `target\release` directory, double click `serial-tool.exe`.
     - On **Linux** or **macOS**, run `./target/release/serial-tool` from `Terminal`.
 
+<br>
 
 ## License
 
